@@ -1,4 +1,10 @@
-import { NativeModules, Platform } from 'react-native';
+import {
+  EmitterSubscription,
+  NativeEventEmitter,
+  NativeModules,
+  Platform,
+} from 'react-native';
+import type { AddKeyEventListener, CallbackFn, EventType } from './types';
 
 const LINKING_ERROR =
   `The package 'react-native-keys' doesn't seem to be linked. Make sure: \n\n` +
@@ -17,6 +23,17 @@ const Keys = NativeModules.Keys
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return Keys.multiply(a, b);
+interface IOSEventEmitter extends NativeEventEmitter {
+  addListener: (
+    eventType: EventType,
+    callback: CallbackFn
+  ) => EmitterSubscription;
 }
+
+export const EventEmitter = new NativeEventEmitter(Keys) as IOSEventEmitter;
+
+export const addEventListener: AddKeyEventListener = (eventType, callback) => {
+  const subscription = EventEmitter.addListener(eventType, callback);
+
+  return subscription;
+};

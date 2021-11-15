@@ -1,8 +1,69 @@
-@objc(Keys)
-class Keys: NSObject {
+import React;
 
-    @objc(multiply:withB:withResolver:withRejecter:)
-    func multiply(a: Float, b: Float, resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
-        resolve(a*b)
-    }
+@objc(Keys)
+public class Keys: RCTEventEmitter {
+  var _hasListeners = false
+  
+  @objc
+  public static var shared: Keys? = nil;
+  
+  override init(){
+    super.init()
+    Keys.shared = self
+  }
+  
+  public override class func requiresMainQueueSetup() -> Bool {
+    return true;
+  }
+  
+  @objc(pressesBegan:event:)
+  public func pressesBegan(_ presses: Set<UIPress>,
+                                  with event: UIPressesEvent?) -> Bool{
+    /*if(!self._hasListeners){
+      return false;
+    }*/
+    
+    self.sendEvent(withName: "keydown", body: [
+      "presses": presses.map({ press in
+        return [
+          "characters": press.key?.characters,
+          "charactersIgnoringModifiers": press.key?.charactersIgnoringModifiers,
+          "modifierFlags": press.key?.modifierFlags.rawValue,
+          "keyCode": press.key?.keyCode.rawValue
+        ]
+      })
+    ])
+    return true;
+  }
+  
+  @objc(pressesEnded:event:)
+  public func pressesEnded(_ presses: Set<UIPress>,
+                                  with event: UIPressesEvent?) -> Bool{
+    /*if(!self._hasListeners){
+      return false;
+    }*/
+    self.sendEvent(withName: "keyup", body: [
+      "presses": presses.map({ press in
+        return [
+          "characters": press.key?.characters,
+          "charactersIgnoringModifiers": press.key?.charactersIgnoringModifiers,
+          "modifierFlags": press.key?.modifierFlags.rawValue,
+          "keyCode": press.key?.keyCode.rawValue
+        ]
+      })
+    ])
+    return true;
+  }
+  
+  public override func supportedEvents() -> [String]! {
+    return ["keyup", "keydown"]
+  }
+  
+  public override func stopObserving() {
+    self._hasListeners = false
+  }
+  
+  public override func startObserving() {
+    self._hasListeners = true;
+  }
 }

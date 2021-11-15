@@ -6,6 +6,7 @@
  */
 
 #import "AppDelegate.h"
+#import "React-Native-Keys-Public.h"
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -48,7 +49,28 @@ static void InitializeFlipper(UIApplication *application) {
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  
+  
   return YES;
+}
+
+- (void)pressesBegan:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event {
+  BOOL handled = [RNKeysPublic pressesBegan:presses withEvent:event];
+  if(!handled){
+    [super pressesBegan:presses withEvent:event];
+  }
+}
+
+- (void)pressesEnded:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event {
+  BOOL handled = [RNKeysPublic pressesEnded:presses withEvent:event];
+  if(!handled){
+    [super pressesEnded:presses withEvent:event];
+  }
+}
+
+- (BOOL)canBecomeFirstResponder{
+  return true;
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
