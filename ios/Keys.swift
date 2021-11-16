@@ -24,12 +24,20 @@ public class Keys: RCTEventEmitter {
     }*/
     
     self.sendEvent(withName: "keydown", body: [
+      
       "presses": presses.map({ press in
         return [
           "characters": press.key?.characters,
           "charactersIgnoringModifiers": press.key?.charactersIgnoringModifiers,
-          "modifierFlags": press.key?.modifierFlags.rawValue,
-          "keyCode": press.key?.keyCode.rawValue
+          "keyCode": press.key?.keyCode.rawValue,
+          "modifierFlags": [
+            "shift": press.key?.modifierFlags.contains(UIKeyModifierFlags.shift),
+            "command": press.key?.modifierFlags.contains(UIKeyModifierFlags.command),
+            "control": press.key?.modifierFlags.contains(UIKeyModifierFlags.control),
+            "alphaShift": press.key?.modifierFlags.contains(UIKeyModifierFlags.alphaShift),
+            "alternate": press.key?.modifierFlags.contains(UIKeyModifierFlags.alternate),
+            "numericPad": press.key?.modifierFlags.contains(UIKeyModifierFlags.numericPad),
+          ],
         ]
       })
     ])
@@ -47,7 +55,14 @@ public class Keys: RCTEventEmitter {
         return [
           "characters": press.key?.characters,
           "charactersIgnoringModifiers": press.key?.charactersIgnoringModifiers,
-          "modifierFlags": press.key?.modifierFlags.rawValue,
+          "modifierFlags": [
+            "shift": press.key?.modifierFlags.contains(UIKeyModifierFlags.shift),
+            "command": press.key?.modifierFlags.contains(UIKeyModifierFlags.command),
+            "control": press.key?.modifierFlags.contains(UIKeyModifierFlags.control),
+            "alphaShift": press.key?.modifierFlags.contains(UIKeyModifierFlags.alphaShift),
+            "alternate": press.key?.modifierFlags.contains(UIKeyModifierFlags.alternate),
+            "numericPad": press.key?.modifierFlags.contains(UIKeyModifierFlags.numericPad),
+          ],
           "keyCode": press.key?.keyCode.rawValue
         ]
       })
