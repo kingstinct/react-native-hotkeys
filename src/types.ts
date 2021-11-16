@@ -2,11 +2,127 @@ import type { NativeEventSubscription } from 'react-native';
 
 export type EventType = 'keyup' | 'keydown' | 'keypress';
 
-export type CallbackFn = (event: KeyboardEvent) => boolean;
+export enum KeyArg {
+  'Alt' = 'Alt',
+  'AltGraph' = 'AltGraph',
+  'CapsLock' = 'CapsLock',
+  'Control' = 'Control',
+  'Fn' = 'Fn',
+  'FnLock' = 'FnLock',
+  'Hyper' = 'Hyper',
+  'Meta' = 'Meta',
+  'NumLock' = 'NumLock',
+  'OS' = 'OS',
+  'ScrollLock' = 'ScrollLock',
+  'Shift' = 'Shift',
+  'Super' = 'Super',
+  'Symbol' = 'Symbol',
+  'SymbolLock' = 'SymbolLock',
+}
+
+enum UIPressPhase {
+  began = 0,
+  changed = 1,
+  stationary = 2,
+  ended = 3,
+  cancelled = 4,
+}
+
+enum UIPressType {
+  upArrow = 0,
+  downArrow = 1,
+  leftArrow = 2,
+  rightArrow = 3,
+  select = 4,
+  menu = 5,
+  playPause = 6,
+}
+
+export type IOSPress = {
+  force: number;
+  phase: UIPressPhase;
+  type: UIPressType;
+  characters: string;
+  charactersIgnoringModifiers: string;
+  keyCode: UIKeyboardHIDUsage;
+  modifierFlags: {
+    shift: boolean;
+    command: boolean;
+    control: boolean;
+    alphaShift: boolean;
+    alternate: boolean;
+    numericPad: boolean;
+  };
+};
+
+enum UIEventType {
+  touches = 0,
+  motion = 1,
+  remoteControl = 2,
+  presses = 3,
+  scroll = 10,
+  hover = 11,
+  transform = 14,
+}
+
+enum UIEventSubtype {
+  // available in iPhone OS 3.0
+  none = 0,
+
+  // for UIEventTypeMotion, available in iPhone OS 3.0
+  motionShake = 1,
+
+  // for UIEventTypeRemoteControl, available in iOS 4.0
+  remoteControlPlay = 100,
+
+  remoteControlPause = 101,
+
+  remoteControlStop = 102,
+
+  remoteControlTogglePlayPause = 103,
+
+  remoteControlNextTrack = 104,
+
+  remoteControlPreviousTrack = 105,
+
+  remoteControlBeginSeekingBackward = 106,
+
+  remoteControlEndSeekingBackward = 107,
+
+  remoteControlBeginSeekingForward = 108,
+
+  remoteControlEndSeekingForward = 109,
+}
+
+export type IOSKeyboardEvent = {
+  type: UIEventType;
+  subtype: UIEventSubtype;
+  presses: IOSPress[];
+};
+
+export type UnifiedKeyboardEvent = {
+  readonly altKey: boolean;
+  // readonly code: string;
+  readonly ctrlKey: boolean;
+  // readonly isComposing: boolean;
+  readonly key: string;
+  // readonly location: number;
+  readonly metaKey: boolean;
+  // readonly repeat: boolean;
+  readonly shiftKey: boolean;
+  getModifierState(keyArg: KeyArg): boolean;
+  nativeEvent: KeyboardEvent | IOSKeyboardEvent;
+};
+
+export type CallbackFn = (event: UnifiedKeyboardEvent) => boolean;
 
 export type AddKeyEventListener = (
   eventType: EventType,
-  callback: CallbackFn
+  callback: CallbackFn,
+  options: {
+    passive: boolean;
+    once: boolean;
+  }
 ) => NativeEventSubscription;
 
 export enum UIKeyboardHIDUsage {

@@ -62,6 +62,20 @@ static void InitializeFlipper(UIApplication *application) {
   }
 }
 
+- (void)pressesChanged:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event{
+// BOOL handled = [RNKeysPublic pressesEnded:presses withEvent:event];
+//  if(!handled){
+    [super pressesEnded:presses withEvent:event];
+ // }
+}
+
+- (void)pressesCancelled:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event{
+  BOOL handled = [RNKeysPublic pressesEnded:presses withEvent:event];
+  if(!handled){
+    [super pressesEnded:presses withEvent:event];
+  }
+}
+
 - (void)pressesEnded:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event {
   BOOL handled = [RNKeysPublic pressesEnded:presses withEvent:event];
   if(!handled){
