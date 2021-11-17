@@ -37,13 +37,13 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/robertherber/react-native-keys",
-  "author": "Robert Herber <robert@kingstinct.com> (https://github.com/robertherber)",
+  "repository": "https://github.com/kingstinct/react-native-keys",
+  "author": "Robert Herber <robert@kingstinct.com> (https://github.com/kingstinct)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/robertherber/react-native-keys/issues"
+    "url": "https://github.com/kingstinct/react-native-keys/issues"
   },
-  "homepage": "https://github.com/robertherber/react-native-keys#readme",
+  "homepage": "https://github.com/kingstinct/react-native-keys#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },

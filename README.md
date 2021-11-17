@@ -1,3 +1,5 @@
+![npm](https://img.shields.io/npm/v/@kingstinct/react-native-keys)
+
 # react-native-keys
 
 Cross-platform handling of key events
