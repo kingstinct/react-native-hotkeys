@@ -67,7 +67,7 @@ export const addEventListener: AddKeyEventListener = (
         }
       };
 
-      if (opts.once) {
+      if (opts?.once) {
         subscription.remove();
       }
 

@@ -3,7 +3,7 @@ import { AddKeyEventListener, KeyArg } from './types';
 export const addEventListener: AddKeyEventListener = (
   eventType,
   callback,
-  { once /*, passive*/ }
+  opts
 ) => {
   const internalCallback = (nativeEvent: KeyboardEvent) => {
     callback({
@@ -31,7 +31,8 @@ export const addEventListener: AddKeyEventListener = (
   };
 
   document.body.addEventListener(eventType, internalCallback, {
-    once,
+    once: opts?.once,
+    passive: opts?.passive,
   });
 
   return {

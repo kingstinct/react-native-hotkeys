@@ -1,5 +1,5 @@
 {
-  "name": "react-native-keys",
+  "name": "@kingstinct/react-native-keys",
   "version": "0.1.0",
   "description": "Cross-platform handling of key events",
   "main": "lib/commonjs/index",

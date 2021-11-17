@@ -19,6 +19,7 @@
     "noStrictGenericChecks": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "strictNullChecks": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,

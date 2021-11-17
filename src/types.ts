@@ -119,7 +119,7 @@ export type CallbackFn = (event: UnifiedKeyboardEvent) => boolean;
 export type AddKeyEventListener = (
   eventType: EventType,
   callback: CallbackFn,
-  options: {
+  options?: {
     passive: boolean;
     once: boolean;
   }
