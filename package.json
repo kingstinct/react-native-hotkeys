@@ -1,6 +1,6 @@
 {
   "name": "@kingstinct/react-native-keys",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Cross-platform handling of key events",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
