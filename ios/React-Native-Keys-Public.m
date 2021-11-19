@@ -5,6 +5,8 @@
 //  Created by Robert Herber on 2021-11-15.
 //
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 #import "react_native_keys-Swift.h"
 #import "React-Native-Keys-Public.h"
 
