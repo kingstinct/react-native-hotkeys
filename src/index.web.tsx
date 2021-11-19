@@ -85,7 +85,8 @@ export const addEventListener: ReactNativeKeysEventListener = (
       altKey: nativeEvent.altKey,
       nativeEvent: nativeEvent,
       ctrlKey: nativeEvent.ctrlKey,
-      key: mapKeyCode(nativeEvent.key as Key),
+      key: nativeEvent.key,
+      keyCode: mapKeyCode(nativeEvent.code as Key),
       metaKey: nativeEvent.metaKey,
       shiftKey: nativeEvent.shiftKey,
       getModifierState: (keyArg) => {
