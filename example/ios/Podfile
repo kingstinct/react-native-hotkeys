@@ -12,7 +12,7 @@ target 'KeysExample' do
     :hermes_enabled => false
   )
 
-  pod '@kingstinct/react-native-keys', :path => '../..'
+  pod 'react-native-keys', :path => '../..'
 
   # Enables Flipper.
   #
