@@ -1,23 +1,37 @@
 ![npm](https://img.shields.io/npm/v/@kingstinct/react-native-keys)
 
-# react-native-keys
+# @kingstinct/react-native-keys
 
 Cross-platform handling of key events
 
 ## Installation
 
 ```sh
-npm install react-native-keys
+npm install @kingstinct/react-native-keys
 ```
+
+If using eas build add "@kingstinct/react-native-keys" to the plugins array in your expo.json.
 
 ## Usage
 
 ```js
-import { multiply } from "react-native-keys";
+import { addEventListener } from "@kingstinct/react-native-keys";
 
 // ...
 
-const result = await multiply(3, 7);
+useEffect(() => {
+    const subscription = addEventListener(
+        'keydown',
+        (e: UnifiedKeyboardEvent) => {
+            console.log('e', e.nativeEvent) // native web or ios event
+            alert(e.key); // 'A'
+        }
+    );
+
+    return () => {
+        subscription.remove();
+    };
+}, []);
 ```
 
 ## Contributing
