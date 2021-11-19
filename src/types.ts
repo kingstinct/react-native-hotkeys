@@ -1,6 +1,6 @@
 import type { NativeEventSubscription } from 'react-native';
 
-export type EventType = 'keyup' | 'keydown' | 'keypress';
+export type EventType = 'keyup' | 'keydown';
 
 export enum KeyArg {
   'Alt' = 'Alt',
@@ -100,7 +100,7 @@ export type IOSKeyboardEvent = {
   presses: IOSPress[];
 };
 
-export type UnifiedKeyboardEvent = {
+export type ReactNativeKeysEvent = {
   readonly altKey: boolean;
   // readonly code: string;
   readonly ctrlKey: boolean;
@@ -112,11 +112,12 @@ export type UnifiedKeyboardEvent = {
   readonly shiftKey: boolean;
   getModifierState(keyArg: KeyArg): boolean;
   nativeEvent: KeyboardEvent | IOSKeyboardEvent;
+  readonly keyCode: ReactNativeKeysKeyCode | null;
 };
 
-export type CallbackFn = (event: UnifiedKeyboardEvent) => boolean;
+export type CallbackFn = (event: ReactNativeKeysEvent) => void;
 
-export type AddKeyEventListener = (
+export type ReactNativeKeysEventListener = (
   eventType: EventType,
   callback: CallbackFn,
   options?: {
@@ -125,37 +126,122 @@ export type AddKeyEventListener = (
   }
 ) => NativeEventSubscription;
 
+// All keys in
+export enum ReactNativeKeysKeyCode {
+  // Comma = 'Comma',
+  // Period = 'Period',
+  Alt = 'Alt',
+  AltGraph = 'AltGraph',
+  ArrowDown = 'ArrowDown',
+  ArrowLeft = 'ArrowLeft',
+  ArrowRight = 'ArrowRight',
+  ArrowUp = 'ArrowUp',
+  Backspace = 'Backspace',
+  CapsLock = 'CapsLock',
+  Control = 'Control',
+  Copy = 'Copy' /* Copy */,
+  Cut = 'Cut' /* Cut */,
+  Delete = 'Delete',
+  End = 'End',
+  Enter = 'Enter',
+  Escape = 'Escape',
+  F1 = 'F1',
+  F10 = 'F10',
+  F11 = 'F11',
+  F12 = 'F12',
+  F13 = 'F13',
+  F14 = 'F14',
+  F15 = 'F15',
+  F16 = 'F16',
+  F17 = 'F17',
+  F18 = 'F18',
+  F19 = 'F19',
+  F2 = 'F2',
+  F20 = 'F20',
+  F3 = 'F3',
+  F4 = 'F4',
+  F5 = 'F5',
+  F6 = 'F6',
+  F7 = 'F7',
+  F8 = 'F8',
+  F9 = 'F9',
+  Find = 'Find' /* Find */,
+  Help = 'Help',
+  Home = 'Home',
+  Insert = 'Insert',
+  /* This is better done with the string/regex
+   Key0 = 'Key0',
+  Key1 = 'Key1',
+  Key2 = 'Key2',
+  Key3 = 'Key3',
+  Key4 = 'Key4',
+  Key5 = 'Key5',
+  Key6 = 'Key6',
+  Key7 = 'Key7',
+  Key8 = 'Key8',
+  Key9 = 'Key9',
+  KeyA = 'KeyA',
+  KeyB = 'KeyB',
+  KeyC = 'KeyC',
+  KeyD = 'KeyD',
+  KeyE = 'KeyE',
+  KeyF = 'KeyF',
+  KeyG = 'KeyG',
+  KeyH = 'KeyH',
+  KeyI = 'KeyI',
+  KeyJ = 'KeyJ',
+  KeyK = 'KeyK',
+  KeyL = 'KeyL',
+  KeyM = 'KeyM',
+  KeyN = 'KeyN',
+  KeyO = 'KeyO',
+  KeyP = 'KeyP',
+  KeyQ = 'KeyQ',
+  KeyR = 'KeyR',
+  KeyS = 'KeyS',
+  KeyT = 'KeyT',
+  KeyU = 'KeyU',
+  KeyV = 'KeyV',
+  KeyW = 'KeyW',
+  KeyX = 'KeyX',
+  KeyY = 'KeyY',
+  KeyZ = 'KeyZ',*/
+  Meta = 'Meta',
+  Mute = 'Mute',
+  NumberPadPlus = 'NumberPadPlus',
+  NumLock = 'NumLock',
+  PageDown = 'PageDown',
+  PageUp = 'PageUp',
+  Paste = 'Paste' /* Paste */,
+  Pause = 'Pause',
+  PrintScreen = 'PrintScreen',
+  Redo = 'Redo',
+  ScrollLock = 'ScrollLock',
+  Shift = 'Shift',
+  Stop = 'Stop' /* Stop */,
+  Tab = 'Tab',
+  Undo = 'Undo' /* Undo */,
+  VolumeDown = 'VolumeDown',
+  VolumeUp = 'VolumeUp',
+}
+
+// as per https://developer.apple.com/documentation/uikit/uikeyboardhidusage
 export enum UIKeyboardHIDUsage {
   keyboardErrorRollOver = 1 /* ErrorRollOver */,
-
   keyboardPOSTFail = 2 /* POSTFail */,
-
   keyboardErrorUndefined = 3 /* ErrorUndefined */,
-
   keyboardA = 4 /* a or A */,
-
   keyboardB = 5 /* b or B */,
-
   keyboardC = 6 /* c or C */,
-
   keyboardD = 7 /* d or D */,
-
   keyboardE = 8 /* e or E */,
-
   keyboardF = 9 /* f or F */,
-
   keyboardG = 10 /* g or G */,
-
   keyboardH = 11 /* h or H */,
-
   keyboardI = 12 /* i or I */,
-
   keyboardJ = 13 /* j or J */,
-
   keyboardK = 14 /* k or K */,
-
   keyboardL = 15 /* l or L */,
-
   keyboardM = 16 /* m or M */,
 
   keyboardN = 17 /* n or N */,

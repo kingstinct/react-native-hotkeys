@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text, TextInput } from 'react-native';
-import type { UnifiedKeyboardEvent } from 'src/types';
+import type { ReactNativeKeysEvent } from 'src/types';
 import { addEventListener } from '../../src/index';
 
 export default function App() {
@@ -11,7 +11,7 @@ export default function App() {
     console.log('registering subscription');
     const subscription = addEventListener(
       'keydown',
-      (e: UnifiedKeyboardEvent) => {
+      (e: ReactNativeKeysEvent) => {
         setResult(JSON.stringify(e, null, 2));
         return true;
       }
@@ -19,7 +19,7 @@ export default function App() {
 
     const subscription2 = addEventListener(
       'keyup',
-      (e: UnifiedKeyboardEvent) => {
+      (e: ReactNativeKeysEvent) => {
         setResult(JSON.stringify(e, null, 2));
         return true;
       }
