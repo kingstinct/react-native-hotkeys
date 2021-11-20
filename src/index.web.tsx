@@ -6,6 +6,8 @@ import {
 } from './types';
 import { Key } from 'ts-key-enum';
 
+export * from './types';
+
 const keyMap: Record<ReactNativeKeysKeyCode, Key | Key[]> = {
   [ReactNativeKeysKeyCode.Alt]: Key.Alt,
   [ReactNativeKeysKeyCode.AltGraph]: Key.AltGraph,

@@ -20,7 +20,7 @@ export enum KeyArg {
   'SymbolLock' = 'SymbolLock',
 }
 
-enum UIPressPhase {
+export enum UIPressPhase {
   began = 0,
   changed = 1,
   stationary = 2,
@@ -28,7 +28,7 @@ enum UIPressPhase {
   cancelled = 4,
 }
 
-enum UIPressType {
+export enum UIPressType {
   upArrow = 0,
   downArrow = 1,
   leftArrow = 2,

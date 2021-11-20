@@ -14,6 +14,8 @@ import {
   ReactNativeKeysKeyCode,
 } from './types';
 
+export * from './types';
+
 const LINKING_ERROR =
   `The package '@kingstinct/react-native-keys' doesn't seem to be linked. Make sure: \n\n` +
   Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
