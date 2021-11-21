@@ -111,6 +111,7 @@ export const addEventListener: ReactNativeKeysEventListener = (
   document.body.addEventListener(eventType, internalCallback, {
     once: opts?.once,
     passive: opts?.passive,
+    capture: opts?.capture,
   });
 
   return {

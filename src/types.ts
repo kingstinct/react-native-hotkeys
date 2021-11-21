@@ -121,8 +121,11 @@ export type ReactNativeKeysEventListener = (
   eventType: EventType,
   callback: CallbackFn,
   options?: {
-    passive: boolean;
-    once: boolean;
+    /** Web Only */
+    passive?: boolean;
+    once?: boolean;
+    /** Web Only */
+    capture?: boolean;
   }
 ) => NativeEventSubscription;
 
