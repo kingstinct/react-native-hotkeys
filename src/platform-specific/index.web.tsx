@@ -3,10 +3,10 @@ import {
   KeyArg,
   ReactNativeKeysEvent,
   ReactNativeKeysKeyCode,
-} from './types';
+} from '../types';
 import { Key } from 'ts-key-enum';
 
-export * from './types';
+export * from '../types';
 
 const keyMap: Record<ReactNativeKeysKeyCode, Key | Key[]> = {
   [ReactNativeKeysKeyCode.Alt]: Key.Alt,

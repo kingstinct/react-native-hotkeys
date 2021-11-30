@@ -15,10 +15,17 @@ If using eas build add "@kingstinct/react-native-keys" to the plugins array in y
 ## Usage
 
 ```js
-import { addEventListener } from "@kingstinct/react-native-keys";
+import { addEventListener, usePressedCombo, KeyArg, ReactNativeKeysKeyCode } from "@kingstinct/react-native-keys";
 
-// ...
+// listen for a specific key combo / hotkey
+const doRefetchOrSomethingElse = useCallback(() => /* ... */, []);
+usePressedCombo('r', KeyArg.Control, doRefetchOrSomethingElse)
 
+// listen for a specific key
+const closeDialogOrSomethingElse = useCallback(() => /* ... */, []);
+usePressedKeyCode(ReactNativeKeysKeyCode.Escape, closeDialogOrSomethingElse)
+
+// use the event listener directly
 useEffect(() => {
     const subscription = addEventListener(
         'keydown',
