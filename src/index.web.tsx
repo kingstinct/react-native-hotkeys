@@ -108,15 +108,17 @@ export const addEventListener: ReactNativeKeysEventListener = (
     } as ReactNativeKeysEvent);
   };
 
-  document.body.addEventListener(eventType, internalCallback, {
+  const options = {
     once: opts?.once,
     passive: opts?.passive,
     capture: opts?.capture,
-  });
+  };
+
+  document.body.addEventListener(eventType, internalCallback, options);
 
   return {
     remove: () => {
-      document.body.removeEventListener(eventType, internalCallback);
+      document.body.removeEventListener(eventType, internalCallback, options);
     },
   };
 };
