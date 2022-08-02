@@ -10,7 +10,6 @@
   "files": [
     "src",
     "lib",
-    "android",
     "ios",
     "cpp",
     "react-native-keys.podspec",
