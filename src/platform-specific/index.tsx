@@ -157,13 +157,15 @@ const keyMap: Record<
   [ReactNativeKeysKeyCode.CapsLock]: UIKeyboardHIDUsage.keyboardCapsLock,
 };
 
-const mapKeyCode = (key: UIKeyboardHIDUsage): ReactNativeKeysKeyCode | null => {
+const mapKeyCode = (
+  key?: UIKeyboardHIDUsage
+): ReactNativeKeysKeyCode | null => {
   return (
     (Object.keys(keyMap).find((k) => {
       const val = keyMap[k as unknown as ReactNativeKeysKeyCode] as
         | UIKeyboardHIDUsage
         | UIKeyboardHIDUsage[];
-      return Array.isArray(val) ? val.includes(key) : val === key;
+      return Array.isArray(val) && key ? val.includes(key) : val === key;
     }) as unknown as ReactNativeKeysKeyCode) || null
   );
 };

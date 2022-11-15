@@ -105,7 +105,7 @@ export type ReactNativeKeysEvent = {
   // readonly code: string;
   readonly ctrlKey: boolean;
   // readonly isComposing: boolean;
-  readonly key: string;
+  readonly key?: string;
   // readonly location: number;
   readonly metaKey: boolean;
   // readonly repeat: boolean;

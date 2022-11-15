@@ -14,3 +14,12 @@ commit-msg:
   commands:
     commitlint:
       run: npx commitlint --edit
+pre-push:
+  parallel: true
+  commands:
+    lint:
+      run: npx lint
+    typescript:
+      run: npx typescript
+    test:
+      run: npx test
