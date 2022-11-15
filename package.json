@@ -1,5 +1,5 @@
 {
-  "name": "react-native-keys",
+  "name": "@kingstinct/react-native-keys",
   "version": "0.1.0",
   "description": "test",
   "main": "lib/commonjs/index",
@@ -28,7 +28,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "typescript": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "prepare": "bob build",
     "release": "release-it",

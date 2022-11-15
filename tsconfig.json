@@ -2,7 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "react-native-keys": ["./src/index"]
+      "react-native-keys": ["./src/index"],
+      "@kingstinct/react-native-keys": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

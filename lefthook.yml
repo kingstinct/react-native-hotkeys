@@ -18,8 +18,8 @@ pre-push:
   parallel: true
   commands:
     lint:
-      run: npx lint
-    typescript:
-      run: npx typescript
+      run: yarn lint
+    typecheck:
+      run: yarn typecheck
     test:
-      run: npx test
+      run: yarn test

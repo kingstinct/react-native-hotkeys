@@ -1,21 +1,24 @@
-# react-native-keys
+# @kingstinct/react-native-keys
 
-react-native-keys
+Add unified keybindings for iOS and web. Android might come later - PRs accepted :)
 
 ## Installation
 
 ```sh
-npm install react-native-keys
+npm install @kingstinct/react-native-keys
 ```
 
 ## Usage
 
-```js
-import { multiply } from 'react-native-keys';
+```ts
+import { usePressedKeyCode } from '@kingstinct/react-native-keys';
 
 // ...
 
-const result = await multiply(3, 7);
+usePressedKeyCode(ReactNativeKeysKeyCode.Escape, () => {
+  // Do something
+});
+```
 ```
 
 ## Contributing
