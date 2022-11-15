@@ -6,6 +6,7 @@
 //
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <React/RCTEventEmitter.h>
 
 #import "react_native_keys-Swift.h"
 #import "React-Native-Keys-Public.h"

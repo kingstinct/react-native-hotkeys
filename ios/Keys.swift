@@ -1,4 +1,5 @@
 import React;
+import Foundation;
 
 @objc(Keys)
 public class Keys: RCTEventEmitter {

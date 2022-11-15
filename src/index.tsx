@@ -45,7 +45,7 @@ function dealWithEvent(
 
   if (
     keyArgs.every((k) => event.getModifierState(k)) &&
-    key.toLowerCase() === keyToMatch.toLowerCase()
+    key?.toLowerCase() === keyToMatch.toLowerCase()
   ) {
     action();
   }
