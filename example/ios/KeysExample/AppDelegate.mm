@@ -1,4 +1,5 @@
 #import "AppDelegate.h"
+#import "React-Native-Keys-Public.h"
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -68,6 +69,39 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 - (BOOL)concurrentRootEnabled
 {
   // Switch this bool to turn on and off the concurrent root
+  return true;
+}
+
+
+- (void)pressesBegan:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event {
+  BOOL handled = [RNKeysPublic pressesBegan:presses withEvent:event];
+  if(!handled){
+    [super pressesBegan:presses withEvent:event];
+  }
+}
+
+- (void)pressesChanged:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event{
+// BOOL handled = [RNKeysPublic pressesEnded:presses withEvent:event];
+//  if(!handled){
+    [super pressesEnded:presses withEvent:event];
+ // }
+}
+
+- (void)pressesCancelled:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event{
+  BOOL handled = [RNKeysPublic pressesEnded:presses withEvent:event];
+  if(!handled){
+    [super pressesEnded:presses withEvent:event];
+  }
+}
+
+- (void)pressesEnded:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event {
+  BOOL handled = [RNKeysPublic pressesEnded:presses withEvent:event];
+  if(!handled){
+    [super pressesEnded:presses withEvent:event];
+  }
+}
+
+- (BOOL)canBecomeFirstResponder{
   return true;
 }
 

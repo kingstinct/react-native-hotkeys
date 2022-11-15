@@ -1,22 +1,96 @@
-import { NativeModules, Platform } from 'react-native';
+import { useEffect } from 'react';
+import { addEventListener } from './platform-specific';
 
-const LINKING_ERROR =
-  `The package 'react-native-keys' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo Go\n';
+import type {
+  KeyArg,
+  ReactNativeKeysEvent,
+  ReactNativeKeysKeyCode,
+} from './types';
 
-const Keys = NativeModules.Keys
-  ? NativeModules.Keys
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
+export * from './platform-specific';
+
+export const usePressedKeyCode = (
+  keyCode: ReactNativeKeysKeyCode,
+  action?: () => unknown,
+  isEnabled = true
+) => {
+  useEffect(() => {
+    if (isEnabled && action) {
+      const subscription = addEventListener(
+        'keydown',
+        (event) => {
+          if (keyCode === event.keyCode) {
+            action();
+          }
         },
-      }
-    );
+        { capture: true }
+      );
+      return () => subscription.remove();
+    }
+    return () => {};
+  }, [isEnabled, action, keyCode]);
+};
 
-export function multiply(a: number, b: number): Promise<number> {
-  return Keys.multiply(a, b);
+function dealWithEvent(
+  event: ReactNativeKeysEvent,
+  keyArgs: KeyArg[],
+  keyToMatch: string,
+  action: () => unknown
+) {
+  const key =
+    'presses' in event.nativeEvent &&
+    event.nativeEvent.presses[0]?.charactersIgnoringModifiers
+      ? event.nativeEvent.presses[0]?.charactersIgnoringModifiers
+      : event.key;
+
+  if (
+    keyArgs.every((k) => event.getModifierState(k)) &&
+    key.toLowerCase() === keyToMatch.toLowerCase()
+  ) {
+    action();
+  }
 }
+
+export const usePressedCombo = (
+  keyToMatch: string,
+  keyArg: KeyArg,
+  action?: () => unknown,
+  isEnabled = true
+) => {
+  useEffect(() => {
+    if (isEnabled && action) {
+      const keyArgs = [keyArg];
+
+      const subscription = addEventListener(
+        'keydown',
+        (event) => {
+          dealWithEvent(event, keyArgs, keyToMatch, action);
+        },
+        { capture: true }
+      );
+      return () => subscription.remove();
+    }
+    return () => {};
+  }, [isEnabled, action, keyToMatch, keyArg]);
+};
+
+export const usePressedComboMulti = (
+  keyToMatch: string,
+  keyArgs: KeyArg[],
+  action?: () => unknown,
+  isEnabled = true
+) => {
+  useEffect(() => {
+    if (isEnabled && action) {
+      const subscription = addEventListener(
+        'keydown',
+        (event) => {
+          dealWithEvent(event, keyArgs, keyToMatch, action);
+        },
+        { capture: true }
+      );
+      return () => subscription.remove();
+    }
+    return () => {};
+  }, [isEnabled, action, keyToMatch, keyArgs]);
+};
