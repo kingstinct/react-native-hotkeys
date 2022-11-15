@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <React/RCTEventEmitter.h>
 
 #ifndef React_Native_Keys_Public_h
 #define React_Native_Keys_Public_h
