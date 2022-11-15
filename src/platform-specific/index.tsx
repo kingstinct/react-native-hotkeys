@@ -28,7 +28,7 @@ const Keys = NativeModules.Keys
       {},
       {
         get() {
-          throw new Error(LINKING_ERROR);
+          console.warn(LINKING_ERROR);
         },
       }
     );
