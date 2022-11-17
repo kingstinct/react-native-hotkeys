@@ -302,7 +302,7 @@ PODS:
   - React-jsinspector (0.70.5)
   - React-logger (0.70.5):
     - glog
-  - react-native-keys (0.4.11):
+  - react-native-keys (0.4.12):
     - React-Core
   - React-perflogger (0.70.5)
   - React-RCTActionSheet (0.70.5):
@@ -562,7 +562,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 31564fa6912459921568e8b0e49024285a4d584b
   React-jsinspector: badd81696361249893a80477983e697aab3c1a34
   React-logger: fdda34dd285bdb0232e059b19d9606fa0ec3bb9c
-  react-native-keys: 1c18e418ed56ca1e24a7e82284cc70e0b89c4032
+  react-native-keys: 5ef9e970447c20b4e270bfc93ecb2ac64807a921
   React-perflogger: e68d3795cf5d247a0379735cbac7309adf2fb931
   React-RCTActionSheet: 05452c3b281edb27850253db13ecd4c5a65bc247
   React-RCTAnimation: 578eebac706428e68466118e84aeacf3a282b4da
