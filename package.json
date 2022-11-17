@@ -1,6 +1,6 @@
 {
   "name": "@kingstinct/react-native-keys",
-  "version": "0.4.12",
+  "version": "0.4.13",
   "description": "test",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
