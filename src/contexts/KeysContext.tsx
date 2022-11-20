@@ -1,5 +1,5 @@
-import React, {
-  useCallback, useEffect, useMemo, useRef, useState,
+import {
+  useCallback, useEffect, useMemo, useRef, useState, createContext,
 } from 'react'
 import { StyleSheet } from 'react-native'
 
@@ -29,7 +29,7 @@ type KeyHandlerCallback = {
 
 type GlobalKeyHandlerProviderProps = PropsWithChildren<{ readonly defaultHandler?: (event: ReactNativeKeysEvent) => void }>
 
-export const KeysContext = React.createContext({
+export const KeysContext = createContext({
   setCommands: (() => {}) as (React.Dispatch<React.SetStateAction<readonly Command[]>>),
   addCallback: (() => ({ remove: () => {} })) as RegisterCallback,
 })
