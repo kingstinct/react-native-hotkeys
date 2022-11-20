@@ -29,18 +29,12 @@ jobs:
         uses: actions/setup-node@v2
         id: setup
         with:
-          cache: yarn
+          cache: npm
           node-version-file: .nvmrc
 
       - name: Install deps
         id: install
-        run: yarn install --frozen-lockfile
+        run: npm install
 
       - name: Lint
-        run: yarn lint
-
-      - name: Typecheck
-        run: yarn typecheck
-
-      - name: Test
-        run: yarn test
+        run: npm run lint
