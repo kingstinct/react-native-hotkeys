@@ -1,4 +1,35 @@
 {
-  "name": "KeysExample",
-  "displayName": "KeysExample"
+  "expo": {
+    "name": "react-native-keys-example",
+    "slug": "react-native-keys-example",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "expo.modules.keys.example"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "expo.modules.keys.example"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
 }

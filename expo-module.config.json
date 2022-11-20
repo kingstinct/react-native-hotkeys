@@ -1,0 +1,10 @@
+{
+  "platforms": ["ios", "android", "web"],
+  "ios": {
+    "modules": ["ReactNativeKeysModule"],
+    "appDelegateSubscribers": ["AppLifecycleDelegate"]
+  },
+  "android": {
+    "modules": ["expo.modules.keys.ReactNativeKeysModule"]
+  }
+}

@@ -1,8 +1,8 @@
-import type { NativeEventSubscription } from 'react-native';
+import type { Subscription } from 'expo-modules-core'
+import type { PropsWithChildren } from 'react'
+import type { StyleProp, ViewStyle } from 'react-native'
 
-export type EventType = 'keyup' | 'keydown';
-
-export enum KeyArg {
+export enum ModifiersType {
   'Alt' = 'Alt',
   'AltGraph' = 'AltGraph',
   'CapsLock' = 'CapsLock',
@@ -18,6 +18,49 @@ export enum KeyArg {
   'Super' = 'Super',
   'Symbol' = 'Symbol',
   'SymbolLock' = 'SymbolLock',
+}
+
+export enum CommandKeyModifiers {
+  alphaShift = 'alphaShift',
+  shift = 'shift',
+  control = 'control',
+  alternate = 'alternate',
+  command = 'command',
+  numericPad = 'numericPad',
+}
+
+export type Command = {
+  readonly id: string,
+  readonly input: string;
+  readonly title?: string;
+  readonly modifiers: readonly (CommandKeyModifiers | `${CommandKeyModifiers}`)[]
+}
+
+export type ReactNativeKeysViewProps = PropsWithChildren<{
+  readonly commands?: readonly Command[],
+  readonly style?: StyleProp<ViewStyle>
+}>;
+
+export type Modifiers = ModifiersType | `${ModifiersType}`
+
+export const MapIosToModifier: Record<CommandKeyModifiers, Modifiers> = {
+  alternate: ModifiersType.Alt,
+  alphaShift: ModifiersType.Shift,
+  command: ModifiersType.Hyper,
+  control: ModifiersType.Control,
+  numericPad: ModifiersType.NumLock,
+  shift: ModifiersType.Shift,
+}
+
+type CommandKeyArgsEnum = ModifiersType.Alt | ModifiersType.Control | ModifiersType.Hyper | ModifiersType.NumLock | ModifiersType.Shift
+export type CommandKeyArgs = CommandKeyArgsEnum | `${CommandKeyArgsEnum}`
+
+export const MapKeyArgToIos: Record<CommandKeyArgs, CommandKeyModifiers> = {
+  [ModifiersType.Alt]: CommandKeyModifiers.alternate,
+  [ModifiersType.Hyper]: CommandKeyModifiers.command,
+  [ModifiersType.Control]: CommandKeyModifiers.control,
+  [ModifiersType.NumLock]: CommandKeyModifiers.numericPad,
+  [ModifiersType.Shift]: CommandKeyModifiers.shift,
 }
 
 export enum UIPressPhase {
@@ -38,21 +81,23 @@ export enum UIPressType {
   playPause = 6,
 }
 
+export type IosModifierFlags = {
+  readonly shift: boolean;
+  readonly command: boolean;
+  readonly control: boolean;
+  readonly alphaShift: boolean;
+  readonly alternate: boolean;
+  readonly numericPad: boolean;
+};
+
 export type IOSPress = {
-  force: number;
-  phase: UIPressPhase;
-  type: UIPressType;
-  characters: string;
-  charactersIgnoringModifiers: string;
-  keyCode: UIKeyboardHIDUsage;
-  modifierFlags: {
-    shift: boolean;
-    command: boolean;
-    control: boolean;
-    alphaShift: boolean;
-    alternate: boolean;
-    numericPad: boolean;
-  };
+  readonly force: number;
+  readonly phase: UIPressPhase;
+  readonly type: UIPressType;
+  readonly characters: string;
+  readonly charactersIgnoringModifiers: string;
+  readonly keyCode: UIKeyboardHIDUsage;
+  readonly modifierFlags: IosModifierFlags;
 };
 
 enum UIEventType {
@@ -95,9 +140,9 @@ enum UIEventSubtype {
 }
 
 export type IOSKeyboardEvent = {
-  type: UIEventType;
-  subtype: UIEventSubtype;
-  presses: IOSPress[];
+  readonly type: UIEventType;
+  readonly subtype: UIEventSubtype;
+  readonly presses: readonly IOSPress[];
 };
 
 export type ReactNativeKeysEvent = {
@@ -110,24 +155,30 @@ export type ReactNativeKeysEvent = {
   readonly metaKey: boolean;
   // readonly repeat: boolean;
   readonly shiftKey: boolean;
-  getModifierState(keyArg: KeyArg): boolean;
-  nativeEvent: KeyboardEvent | IOSKeyboardEvent;
+  getModifierState(keyArg: Modifiers): boolean;
+  readonly nativeEvent: IOSKeyboardEvent | KeyboardEvent;
   readonly keyCode: ReactNativeKeysKeyCode | null;
 };
 
 export type CallbackFn = (event: ReactNativeKeysEvent) => void;
 
-export type ReactNativeKeysEventListener = (
-  eventType: EventType,
-  callback: CallbackFn,
+export type CommandPayload = { readonly input: string, readonly modifierFlags: IosModifierFlags }
+
+export type CommandCallback = (payload: CommandPayload) => void
+
+export type EventTypes = 'command' | 'keydown' | 'keyup';
+
+export type ReactNativeKeysEventListener<TEventType extends EventTypes> = ((
+  eventType: TEventType,
+  callback: TEventType extends 'command' ? CommandCallback : CallbackFn,
   options?: {
     /** Web Only */
-    passive?: boolean;
-    once?: boolean;
+    readonly passive?: boolean;
+    readonly once?: boolean;
     /** Web Only */
-    capture?: boolean;
+    readonly capture?: boolean;
   }
-) => NativeEventSubscription;
+) => Subscription);
 
 // All keys in
 export enum ReactNativeKeysKeyCode {
@@ -172,8 +223,8 @@ export enum ReactNativeKeysKeyCode {
   Help = 'Help',
   Home = 'Home',
   Insert = 'Insert',
-  /* This is better done with the string/regex
-   Key0 = 'Key0',
+  // This is better done with the string/regex
+  Key0 = 'Key0',
   Key1 = 'Key1',
   Key2 = 'Key2',
   Key3 = 'Key3',
@@ -208,7 +259,7 @@ export enum ReactNativeKeysKeyCode {
   KeyW = 'KeyW',
   KeyX = 'KeyX',
   KeyY = 'KeyY',
-  KeyZ = 'KeyZ',*/
+  KeyZ = 'KeyZ',
   Meta = 'Meta',
   Mute = 'Mute',
   NumberPadPlus = 'NumberPadPlus',

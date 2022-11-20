@@ -1,34 +1,35 @@
 # @kingstinct/react-native-keys
 
-Add unified keybindings for iOS and web. Android might come later - PRs accepted :)
+My new module
 
-## Installation
+# API documentation
 
-```sh
+- [Documentation for the main branch](https://github.com/expo/expo/blob/main/docs/pages/versions/unversioned/sdk/@kingstinct/react-native-keys.md)
+- [Documentation for the latest stable release](https://docs.expo.dev/versions/latest/sdk/@kingstinct/react-native-keys/)
+
+# Installation in managed Expo projects
+
+For [managed](https://docs.expo.dev/versions/latest/introduction/managed-vs-bare/) Expo projects, please follow the installation instructions in the [API documentation for the latest stable release](#api-documentation). If you follow the link and there is no documentation available then this library is not yet usable within managed projects &mdash; it is likely to be included in an upcoming Expo SDK release.
+
+# Installation in bare React Native projects
+
+For bare React Native projects, you must ensure that you have [installed and configured the `expo` package](https://docs.expo.dev/bare/installing-expo-modules/) before continuing.
+
+### Add the package to your npm dependencies
+
+```
 npm install @kingstinct/react-native-keys
 ```
 
-## Usage
+### Configure for iOS
 
-```ts
-import { usePressedKeyCode } from '@kingstinct/react-native-keys';
+Run `npx pod-install` after installing the npm package.
 
-// ...
 
-usePressedKeyCode(ReactNativeKeysKeyCode.Escape, () => {
-  // Do something
-});
-```
-```
+### Configure for Android
 
-## Contributing
 
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
-## License
+# Contributing
 
-MIT
-
----
-
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+Contributions are very welcome! Please refer to guidelines described in the [contributing guide]( https://github.com/expo/expo#contributing).

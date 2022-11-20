@@ -1,29 +1,14 @@
 {
+  "extends": "expo-module-scripts/tsconfig.base",
   "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      "react-native-keys": ["./src/index"],
-      "@kingstinct/react-native-keys": ["./src/index"]
-    },
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "esModuleInterop": true,
-    "importsNotUsedAsValues": "error",
+    "outDir": "./build",
     "forceConsistentCasingInFileNames": true,
-    "jsx": "react",
-    "lib": ["esnext", "DOM"],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noImplicitUseStrict": false,
-    "noStrictGenericChecks": false,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "target": "esnext"
-  }
+    "strict": true
+  },
+  "include": [ "./src" ],
+  "exclude": [
+    "**/__mocks__/*",
+    "**/__tests__/*",
+    "**/__stories__/*"
+  ]
 }

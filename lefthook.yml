@@ -1,25 +1,5 @@
-pre-commit:
-  parallel: true
-  commands:
-    lint:
-      files: git diff --name-only @{push}
-      glob: "*.{js,ts,jsx,tsx}"
-      run: npx eslint {files}
-    types:
-      files: git diff --name-only @{push}
-      glob: "*.{js,ts, jsx, tsx}"
-      run: npx tsc --noEmit
-commit-msg:
-  parallel: true
-  commands:
-    commitlint:
-      run: npx commitlint --edit
 pre-push:
   parallel: true
   commands:
     lint:
-      run: yarn lint
-    typecheck:
-      run: yarn typecheck
-    test:
-      run: yarn test
+      run: npm run lint
