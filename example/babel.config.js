@@ -1,4 +1,5 @@
 const path = require('path');
+const pak = require('../package.json');
 module.exports = function (api) {
   api.cache(true);
   return {
@@ -10,7 +11,7 @@ module.exports = function (api) {
           extensions: ['.tsx', '.ts', '.js', '.json'],
           alias: {
             // For development, we want to alias the library to the source
-            '@kingstinct/react-native-keys': path.join(__dirname, '..', 'src', 'index.ts'),
+            [pak.name]: path.join(__dirname, '..', 'src'),
           },
         },
       ],
