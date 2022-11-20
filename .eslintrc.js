@@ -1,4 +1,4 @@
-{
+module.exports = {
   "root": true,
   "extends": ["eslint-config-kingstinct/react-native"],
   "ignorePatterns": ["build"],
