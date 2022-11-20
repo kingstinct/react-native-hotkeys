@@ -4,8 +4,8 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "paths": {
-      "@kingstinct/react-native-keys": [ "../src/index" ],
-      "@kingstinct/react-native-keys/*": [ "../src/*" ]
+      "react-native-hotkeys": [ "../src/index" ],
+      "react-native-hotkeys/*": [ "../src/*" ]
     }
   }
 }

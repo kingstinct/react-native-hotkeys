@@ -1,28 +1,29 @@
-import { useState} from 'react';
-
-import { StyleSheet, View, Text, TextInput } from 'react-native';
-import {  KeysProvider, ModifiersType, ReactNativeKeysKeyCode, useGlobalKeyHandler } from '@kingstinct/react-native-keys';
-
+import React, { useState } from 'react'
+import {
+  KeysProvider, ModifiersType, ReactNativeKeysKeyCode, useHotkey,
+} from 'react-native-hotkeys'
+import {
+  StyleSheet, View, Text, TextInput,
+} from 'react-native'
 
 function App() {
-  const [result, setResult] = useState<string>('');
+  const [result, setResult] = useState<string>('')
 
-  useGlobalKeyHandler(ReactNativeKeysKeyCode.KeyA,  (event) => {
+  useHotkey(ReactNativeKeysKeyCode.KeyA, (event) => {
     setResult(JSON.stringify(event))
     alert('ctrl-a')
-  }, [ModifiersType.Hyper], { title: 'Testar' })
+  }, { title: 'Testar', modifiers: [ModifiersType.Hyper] })
 
-  /*useGlobalKeyHandler(ReactNativeKeysKeyCode.Escape, (event) => {
+  /* useHotkey(ReactNativeKeysKeyCode.Escape, (event) => {
     setResult(JSON.stringify(event))
-  })*/
+  }) */
 
-  useGlobalKeyHandler(ReactNativeKeysKeyCode.Escape, (event) => {
+  useHotkey(ReactNativeKeysKeyCode.Escape, (event) => {
     setResult(JSON.stringify(event))
     alert('escape')
   })
 
-
-  useGlobalKeyHandler(ReactNativeKeysKeyCode.ArrowLeft, (event) => {
+  useHotkey(ReactNativeKeysKeyCode.ArrowLeft, (event) => {
     setResult(JSON.stringify(event))
     alert('left')
   })
@@ -34,28 +35,31 @@ function App() {
   //   return () => subscription.remove()
   // }, [])
 
-  useGlobalKeyHandler(ReactNativeKeysKeyCode.Key0, (event) => {
+  useHotkey(ReactNativeKeysKeyCode.Key0, (event) => {
     alert('0')
   })
-  
 
   return (
-    
-      <View style={styles.container}>
-        <TextInput
-          style={{ width: 100, height: 20, backgroundColor: 'lightgray' }}
-          
-        />
-        <Text style={{ color: 'black' }}>Result: {result}</Text>
-      </View>
-  );
+
+    <View style={styles.container}>
+      <TextInput
+        accessibilityLabel='Text input field'
+        style={{ width: 100, height: 20, backgroundColor: 'lightgray' }}
+
+      />
+      <Text style={{ color: 'black' }}>
+        Result:
+        {result}
+      </Text>
+    </View>
+  )
 }
 
-const AppOuter = () => {
-  return <KeysProvider>
-    <App></App>
+const AppOuter = () => (
+  <KeysProvider>
+    <App />
   </KeysProvider>
-}
+)
 
 const styles = StyleSheet.create({
   container: {
@@ -67,6 +71,6 @@ const styles = StyleSheet.create({
     height: 60,
     marginVertical: 20,
   },
-});
+})
 
 export default AppOuter

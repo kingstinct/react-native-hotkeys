@@ -1,11 +1,11 @@
-# @kingstinct/react-native-keys
+# react-native-hotkeys
 
 My new module
 
 # API documentation
 
-- [Documentation for the main branch](https://github.com/expo/expo/blob/main/docs/pages/versions/unversioned/sdk/@kingstinct/react-native-keys.md)
-- [Documentation for the latest stable release](https://docs.expo.dev/versions/latest/sdk/@kingstinct/react-native-keys/)
+- [Documentation for the main branch](https://github.com/expo/expo/blob/main/docs/pages/versions/unversioned/sdk/react-native-hotkeys.md)
+- [Documentation for the latest stable release](https://docs.expo.dev/versions/latest/sdk/react-native-hotkeys/)
 
 # Installation in managed Expo projects
 
@@ -18,7 +18,7 @@ For bare React Native projects, you must ensure that you have [installed and con
 ### Add the package to your npm dependencies
 
 ```
-npm install @kingstinct/react-native-keys
+npm install react-native-hotkeys
 ```
 
 ### Configure for iOS

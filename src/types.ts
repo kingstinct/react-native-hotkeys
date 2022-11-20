@@ -52,10 +52,10 @@ export const MapIosToModifier: Record<CommandKeyModifiers, Modifiers> = {
   shift: ModifiersType.Shift,
 }
 
-type CommandKeyArgsEnum = ModifiersType.Alt | ModifiersType.Control | ModifiersType.Hyper | ModifiersType.NumLock | ModifiersType.Shift
-export type CommandKeyArgs = CommandKeyArgsEnum | `${CommandKeyArgsEnum}`
+type CommandModifiersEnum = ModifiersType.Alt | ModifiersType.Control | ModifiersType.Hyper | ModifiersType.NumLock | ModifiersType.Shift
+export type CommandModifiers = CommandModifiersEnum | `${CommandModifiersEnum}`
 
-export const MapKeyArgToIos: Record<CommandKeyArgs, CommandKeyModifiers> = {
+export const MapKeyArgToIos: Record<CommandModifiers, CommandKeyModifiers> = {
   [ModifiersType.Alt]: CommandKeyModifiers.alternate,
   [ModifiersType.Hyper]: CommandKeyModifiers.command,
   [ModifiersType.Control]: CommandKeyModifiers.control,
@@ -157,7 +157,7 @@ export type ReactNativeKeysEvent = {
   readonly shiftKey: boolean;
   getModifierState(keyArg: Modifiers): boolean;
   readonly nativeEvent: IOSKeyboardEvent | KeyboardEvent;
-  readonly keyCode: ReactNativeKeysKeyCode | null;
+  readonly keyCode: KeyCode | null;
 };
 
 export type CallbackFn = (event: ReactNativeKeysEvent) => void;
@@ -181,7 +181,7 @@ export type ReactNativeKeysEventListener<TEventType extends EventTypes> = ((
 ) => Subscription);
 
 // All keys in
-export enum ReactNativeKeysKeyCode {
+export enum KeyCode {
   // Comma = 'Comma',
   // Period = 'Period',
   Alt = 'Alt',

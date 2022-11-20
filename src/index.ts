@@ -1,17 +1,17 @@
 import KeysContext, { KeysProvider } from './contexts/KeysContext'
-import useGlobalKeyHandler from './hooks/useGlobalKeyHandler'
-import { ModifiersType, ReactNativeKeysKeyCode, CommandKeyModifiers } from './types'
+import useHotkey from './hooks/useHotkey'
+import { ModifiersType, KeyCode, CommandKeyModifiers } from './types'
 import addEventListener from './utils/addEventListener'
 
-import type { CommandKeyArgs } from './types'
+import type { CommandModifiers } from './types'
 
-export type { CommandKeyArgs }
+export type { CommandModifiers as CommandKeyArgs }
 export {
   addEventListener,
-  useGlobalKeyHandler,
+  useHotkey,
   KeysContext,
   KeysProvider,
   CommandKeyModifiers as KeyModifiers,
-  ReactNativeKeysKeyCode,
+  KeyCode as ReactNativeKeysKeyCode,
   ModifiersType,
 }

@@ -1,4 +1,4 @@
-import {
+import React, {
   useCallback, useEffect, useMemo, useRef, useState, createContext,
 } from 'react'
 import { StyleSheet } from 'react-native'
@@ -9,43 +9,59 @@ import addEventListener from '../utils/addEventListener'
 import { keyMap } from '../utils/mapWebKeyCode'
 
 import type {
-  CommandKeyArgs, ReactNativeKeysEvent, ReactNativeKeysKeyCode, Command,
+  CommandModifiers, ReactNativeKeysEvent, KeyCode, Command,
 } from '../types'
 import type { Subscription } from 'expo-modules-core'
 import type { PropsWithChildren } from 'react'
 
-export type GlobalCallback = (event: ReactNativeKeysEvent) => PromiseLike<boolean | void> | boolean | void;
+export type OnPressCallback = (
+  event: ReactNativeKeysEvent
+) => PromiseLike<boolean | void> | boolean | void;
 
-type RegisterCallback = (key: ReactNativeKeysKeyCode, modifiers: readonly CommandKeyArgs[], callback: GlobalCallback, priority: number, id: string, title?: string) => Subscription
+type RegisterCallback = (
+  key: KeyCode,
+  modifiers: readonly CommandModifiers[],
+  callback: OnPressCallback,
+  priority: number,
+  id: string,
+  title?: string
+) => Subscription
 
 type KeyHandlerCallback = {
-  readonly keyCode: ReactNativeKeysKeyCode,
-  readonly modifiers: readonly CommandKeyArgs[],
-  readonly callback: GlobalCallback,
+  readonly keyCode: KeyCode,
+  readonly modifiers: readonly CommandModifiers[],
+  readonly callback: OnPressCallback,
   readonly priority: number,
   readonly title?: string
   readonly id: string
 }
 
-type GlobalKeyHandlerProviderProps = PropsWithChildren<{ readonly defaultHandler?: (event: ReactNativeKeysEvent) => void }>
+type KeysProviderProps = PropsWithChildren<{
+  readonly defaultHandler?: (event: ReactNativeKeysEvent) => void
+}>
 
 export const KeysContext = createContext({
   setCommands: (() => {}) as (React.Dispatch<React.SetStateAction<readonly Command[]>>),
   addCallback: (() => ({ remove: () => {} })) as RegisterCallback,
 })
 
-export const KeysProvider: React.FC<GlobalKeyHandlerProviderProps> = ({ children, defaultHandler }) => {
+export const KeysProvider: React.FC<KeysProviderProps> = ({ children, defaultHandler }) => {
   const [commands, setCommands] = useState<readonly Command[]>([])
   // eslint-disable-next-line functional/prefer-readonly-type
   const callbacks = useRef<KeyHandlerCallback[]>([])
-  const addCallback = useCallback<RegisterCallback>((keyCode, modifiers, callback, priority, id, title) => {
+  const addCallback = useCallback<RegisterCallback>((
+    keyCode, modifiers, callback, priority, id, title,
+  ) => {
     callbacks.current.push({
       callback, keyCode, priority, modifiers, id, title,
     })
     const mappedModifiers = modifiers.map((m) => MapKeyArgToIos[m])
     setCommands((c) => [
       ...c, {
-        input: keyMap[keyCode] as string, modifiers: mappedModifiers, id, title,
+        input: keyMap[keyCode] as string,
+        modifiers: mappedModifiers,
+        id,
+        title,
       },
     ])
     return ({
@@ -57,7 +73,9 @@ export const KeysProvider: React.FC<GlobalKeyHandlerProviderProps> = ({ children
   }, [])
 
   const onPress = useCallback(async (event: ReactNativeKeysEvent) => {
-    const sortedCallbacks = callbacks.current.filter((c) => c.keyCode === event.keyCode).sort((a, b) => b.priority - a.priority)
+    const sortedCallbacks = callbacks.current
+      .filter((c) => c.keyCode === event.keyCode)
+      .sort((a, b) => b.priority - a.priority)
 
     const wasHandled = await sortedCallbacks.reduce(async (prev, { callback }) => {
       if (await prev) {
@@ -73,7 +91,7 @@ export const KeysProvider: React.FC<GlobalKeyHandlerProviderProps> = ({ children
   }, [defaultHandler])
 
   useEffect(() => {
-    const subscription = addEventListener('keydown', (event) => {
+    const subscription = addEventListener('keyup', (event) => {
       void onPress(event)
     }, {
       capture: true,
@@ -85,8 +103,13 @@ export const KeysProvider: React.FC<GlobalKeyHandlerProviderProps> = ({ children
   }, [onPress])
 
   return (
-    <KeysContext.Provider value={useMemo(() => ({ setCommands, addCallback }), [addCallback])}>
-      <ReactNativeKeysView commands={commands} style={styles.keysView}>
+    <KeysContext.Provider
+      value={useMemo(() => ({ setCommands, addCallback }), [addCallback])}
+    >
+      <ReactNativeKeysView
+        commands={commands}
+        style={styles.keysView}
+      >
         {children}
       </ReactNativeKeysView>
     </KeysContext.Provider>
