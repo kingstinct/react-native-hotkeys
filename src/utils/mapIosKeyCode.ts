@@ -117,7 +117,7 @@ const mapIosKeyCode = (
   keyCode?: UIKeyboardHIDUsage,
 ): ReactNativeKeysKeyCode | null => (
   (Object.keys(keyMap).find((k) => {
-    const val = keyMap[k]
+    const val = keyMap[k as ReactNativeKeysKeyCode]
     return Array.isArray(val) && keyCode ? val.includes(keyCode) : val === keyCode
   }) as unknown as ReactNativeKeysKeyCode) || null
 )

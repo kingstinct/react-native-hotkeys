@@ -9,6 +9,7 @@ import type {
   CommandCallback,
   CallbackFn,
 } from '../types'
+import type { Subscription } from 'expo-modules-core'
 import type { Key } from 'ts-key-enum'
 
 export * from '../types'
@@ -23,7 +24,7 @@ function addEventListener<TEventType extends EventTypes>(
     /** Web Only */
     readonly capture?: boolean;
   },
-) {
+): Subscription {
   if (eventType === 'command') {
     return addEventListener('keydown', (event) => {
       const cb = callback as CommandCallback
