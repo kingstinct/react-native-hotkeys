@@ -1,6 +1,6 @@
 # react-native-hotkeys
 
-My new module
+React Native module to enable listening to and capturing hotkeys. Currently with support for iOS (tested on iPad and M1 Macs) and web.
 
 # API documentation
 
@@ -21,14 +21,65 @@ For bare React Native projects, you must ensure that you have [installed and con
 npm install react-native-hotkeys
 ```
 
+or 
+
+```
+yarn add react-native-hotkeys
+```
+
 ### Configure for iOS
 
 Run `npx pod-install` after installing the npm package.
 
+# Usage
 
-### Configure for Android
+Start by wrapping your app in the KeysProvider:
+```TypeScript
+import {
+  KeysProvider
+} from 'react-native-hotkeys'
 
+const App = () => {
+  return (
+    <KeysProvider>
+      <YourApp />
+    </KeysProvider>
+  )
+}
+```
 
+The easiest way to use it is with the useHotkey Hook:
+```TypeScript
+import {
+  ModifiersType, ReactNativeKeysKeyCode, useHotkey,
+} from 'react-native-hotkeys'
+
+// use the useHotkey hook anywhere
+useHotkey(ReactNativeKeysKeyCode.Escape, (event) => {
+  // do something
+})
+
+useHotkey(ReactNativeKeysKeyCode.ArrowLeft, (event) => {
+  // move player to the left
+})
+
+// use modifiers
+useHotkey(ReactNativeKeysKeyCode.ArrowLeft, (event) => {
+  // do something different
+}, { modifiers: ModifiersType.Shift })
+
+// return true to indicate that the event was handled (and priority to override priority for nestled handlers)
+useHotkey(ReactNativeKeysKeyCode.ArrowLeft, (event) => {
+  return true
+}, { priority: 10 })
+```
+
+Optionally you can directly use addEventListener:
+```TypeScript
+addEventListener(ReactNativeKeysKeyCode.Escape, (event) => {
+  // do something
+})
+```
 
 # Contributing
 
