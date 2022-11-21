@@ -49,7 +49,7 @@ function addEventListener<TEventType extends EventTypes>(
       nativeEvent,
       ctrlKey: nativeEvent.ctrlKey,
       key: nativeEvent.key,
-      keyCode: mapWebKeyCode(nativeEvent.code as Key),
+      keyCode: mapWebKeyCode(nativeEvent.key as Key),
       metaKey: nativeEvent.metaKey,
       shiftKey: nativeEvent.shiftKey,
       getModifierState: (keyArg) => {

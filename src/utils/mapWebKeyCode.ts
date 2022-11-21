@@ -100,7 +100,7 @@ export const keyMap: Record<KeyCode, Key | string | readonly Key[]> = {
 
 const mapWebKeyCode = (key: Key): KeyCode | null => (
   (Object.keys(keyMap).find((k) => {
-    const val = keyMap[k as unknown as KeyCode] as Key | readonly Key[]
+    const val = keyMap[k as KeyCode] as Key | readonly Key[]
     return Array.isArray(val) ? val.includes(key) : val === key
   }) as unknown as KeyCode) || null
 )
