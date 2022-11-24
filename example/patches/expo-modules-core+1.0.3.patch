@@ -1,0 +1,94 @@
+diff --git a/node_modules/expo-modules-core/ios/AppDelegates/EXAppDelegateWrapper.m b/node_modules/expo-modules-core/ios/AppDelegates/EXAppDelegateWrapper.m
+index acd8fa9..8703eff 100644
+--- a/node_modules/expo-modules-core/ios/AppDelegates/EXAppDelegateWrapper.m
++++ b/node_modules/expo-modules-core/ios/AppDelegates/EXAppDelegateWrapper.m
+@@ -27,6 +27,10 @@ - (instancetype)init
+   return self;
+ }
+ 
++- (void)buildMenuWithBuilder:(id<UIMenuBuilder>)builder{
++    [_expoAppDelegate buildMenuWithBuilder:builder];
++}
++
+ // This needs to be implemented, otherwise forwarding won't be called.
+ // When the app starts, `UIApplication` uses it to check beforehand
+ // which `UIApplicationDelegate` selectors are implemented.
+diff --git a/node_modules/expo-modules-core/ios/AppDelegates/EXAppDelegatesLoader.m b/node_modules/expo-modules-core/ios/AppDelegates/EXAppDelegatesLoader.m
+index 6540697..c8c9506 100644
+--- a/node_modules/expo-modules-core/ios/AppDelegates/EXAppDelegatesLoader.m
++++ b/node_modules/expo-modules-core/ios/AppDelegates/EXAppDelegatesLoader.m
+@@ -17,6 +17,7 @@ @implementation EXAppDelegatesLoader
+ + (void)load
+ {
+   ModulesProvider *modulesProvider = [EXAppContext modulesProviderWithName:@"ExpoModulesProvider"];
++    
+   [EXExpoAppDelegate registerSubscriber:[[EXLegacyAppDelegateWrapper alloc] init]];
+   [EXExpoAppDelegate registerSubscribersFromModulesProvider:modulesProvider];
+   [EXExpoAppDelegate registerReactDelegateHandlersFromModulesProvider:modulesProvider];
+diff --git a/node_modules/expo-modules-core/ios/AppDelegates/ExpoAppDelegate.swift b/node_modules/expo-modules-core/ios/AppDelegates/ExpoAppDelegate.swift
+index 77c69b2..aeddee2 100644
+--- a/node_modules/expo-modules-core/ios/AppDelegates/ExpoAppDelegate.swift
++++ b/node_modules/expo-modules-core/ios/AppDelegates/ExpoAppDelegate.swift
+@@ -2,7 +2,7 @@ import UIKit
+ import Dispatch
+ import Foundation
+ 
+-var subscribers = [ExpoAppDelegateSubscriberProtocol]()
++var subscribers = [ExpoAppDelegateSubscriber]()
+ var reactDelegateHandlers = [ExpoReactDelegateHandler]()
+ 
+ /**
+@@ -18,10 +18,25 @@ open class ExpoAppDelegate: UIResponder, UIApplicationDelegate {
+   @objc
+   public let reactDelegate = ExpoReactDelegate(handlers: reactDelegateHandlers)
+ 
++    @objc
++    open override func buildMenu(with builder: UIMenuBuilder) {
++        let parsedSubscribers = subscribers.filter {
++            $0.responds(to: #selector(buildMenu(with:)))
++        }
++
++        if parsedSubscribers.isEmpty {
++            return;
++        }
++        
++        parsedSubscribers.forEach {
++            $0.buildMenu(with: builder)
++        }
++    }
++    
+   // MARK: - Initializing the App
+ 
+   open func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+-    let parsedSubscribers = subscribers.filter {
++      let parsedSubscribers = subscribers.filter {
+       $0.responds(to: #selector(application(_:willFinishLaunchingWithOptions:)))
+     }
+ 
+@@ -107,6 +122,8 @@ open class ExpoAppDelegate: UIResponder, UIApplicationDelegate {
+     subscribers.forEach { $0.application?(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken) }
+   }
+     
++  
++
+   open func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+     subscribers.forEach { $0.application?(application, didFailToRegisterForRemoteNotificationsWithError: error) }
+   }
+@@ -300,7 +317,7 @@ open class ExpoAppDelegate: UIResponder, UIApplicationDelegate {
+   }
+ 
+   @objc
+-  public static func registerSubscriber(_ subscriber: ExpoAppDelegateSubscriberProtocol) {
++  public static func registerSubscriber(_ subscriber: ExpoAppDelegateSubscriber) {
+     if subscribers.contains(where: { $0 === subscriber }) {
+       fatalError("Given app delegate subscriber `\(String(describing: subscriber))` is already registered.")
+     }
+@@ -308,7 +325,7 @@ open class ExpoAppDelegate: UIResponder, UIApplicationDelegate {
+   }
+ 
+   @objc
+-  public static func getSubscriber(_ name: String) -> ExpoAppDelegateSubscriberProtocol? {
++  public static func getSubscriber(_ name: String) -> ExpoAppDelegateSubscriber? {
+     return subscribers.first { String(describing: $0) == name }
+   }
+ 
