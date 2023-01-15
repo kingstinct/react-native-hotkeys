@@ -39,7 +39,23 @@ class ReactNativeKeysView: ExpoView {
             ]
           })
         ])
-        super.pressesBegan(presses, with: event)
+
+        let shouldPassEventForward = event!.allPresses.contains(where: { press in
+            guard let key = press.key else {
+                return false
+            }
+            
+            if #available(iOS 13.4, *) {
+                return key.keyCode != UIKeyboardHIDUsage.keyboardEscape // dont let escape pass, since it produces an annoying sound, and not passing it doesnt prevent focus to change (would like to add arrow keys as well, but that would break arrow keys in TextInputs
+            } else {
+                return true
+            }
+            
+        })
+        
+        if(shouldPassEventForward){
+            super.pressesBegan(presses, with: event)
+        }
     }
 
     
