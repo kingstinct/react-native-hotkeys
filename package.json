@@ -1,6 +1,6 @@
 {
   "name": "react-native-hotkeys",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Hotkeys support for React Native (iOS and web)",
   "main": "build/index.js",
   "types": "build/index.d.ts",
