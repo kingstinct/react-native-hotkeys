@@ -39,6 +39,7 @@ class ReactNativeKeysView: ExpoView {
             ]
           })
         ])
+        super.pressesBegan(presses, with: event)
     }
 
     
@@ -77,6 +78,7 @@ class ReactNativeKeysView: ExpoView {
             ]
           })
         ])
+        super.pressesEnded(presses, with: event)
     }
     
     var _keyCommands: [UIKeyCommand]? = []
