@@ -1,9 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { EventEmitter, NativeModulesProxy } from 'expo-modules-core'
 
+import mapIosKeyCode from './mapIosKeyCode'
 import ReactNativeKeysModule from '../ReactNativeKeysModule'
 import { ModifiersType } from '../types'
-import mapIosKeyCode from './mapIosKeyCode'
 
 import type {
   CallbackFn, CommandCallback, CommandPayload, EventTypes, IOSKeyboardEvent, ReactNativeKeysEvent,

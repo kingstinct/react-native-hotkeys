@@ -1,7 +1,7 @@
+import mapWebKeyCode from './mapWebKeyCode'
 import {
   ModifiersType,
 } from '../types'
-import mapWebKeyCode from './mapWebKeyCode'
 
 import type {
   ReactNativeKeysEvent,
