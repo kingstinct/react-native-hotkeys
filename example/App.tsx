@@ -12,7 +12,7 @@ function App() {
   useHotkey(ReactNativeKeysKeyCode.KeyA, (event) => {
     setResult(JSON.stringify(event))
     alert('ctrl-a')
-  }, { title: 'Testar', modifiers: [ModifiersType.Hyper] })
+  }, { title: 'Testar', modifiers: [ModifiersType.Control] })
 
   /* useHotkey(ReactNativeKeysKeyCode.Escape, (event) => {
     setResult(JSON.stringify(event))

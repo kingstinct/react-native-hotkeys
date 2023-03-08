@@ -77,11 +77,11 @@ function addEventListener<TEventType extends EventTypes>(
     capture: opts?.capture,
   }
 
-  document.body.addEventListener(eventType as 'keydown', internalCallback, options)
+  document.body.addEventListener(eventType as 'keydown' | 'keyup', internalCallback, options)
 
   return {
     remove: () => {
-      document.body.removeEventListener(eventType as 'keydown', internalCallback, options)
+      document.body.removeEventListener(eventType as 'keydown' | 'keyup', internalCallback, options)
     },
   }
 }
