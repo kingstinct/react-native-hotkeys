@@ -3,7 +3,8 @@
   "compilerOptions": {
     "outDir": "./build",
     "forceConsistentCasingInFileNames": true,
-    "strict": true
+    "strict": true,
+    "noEmit": false
   },
   "include": [ "./src" ],
   "exclude": [
