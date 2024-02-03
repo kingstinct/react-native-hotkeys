@@ -4,6 +4,7 @@
     "outDir": "./build",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "declaration": true,
     "noEmit": false
   },
   "include": [ "./src" ],
